@@ -171,12 +171,14 @@ nav ul {
   position: relative;
 }
 
-.project-input {
+input[type="text"],
+input[type="date"],
+select,
+textarea {
   padding: 0.5rem;
-  padding-right: 2rem;
 
-  font-size: inherit;
-  color: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
   background-color: var(--color-bg-light);
   border: 2px solid var(--color-border);
   border-radius: 0.5rem;
@@ -184,7 +186,17 @@ nav ul {
   width: 100%;
 }
 
-.project-input:focus {
+.project-input {
+  padding-right: 2rem;
+
+  font-size: inherit;
+  color: inherit;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
   outline: 2px solid var(--color-text-dark);
 }
 
@@ -347,8 +359,63 @@ main .primary-btn {
   font-size: 1.125rem;
 }
 
-dialog {
+#new-task-dialog {
   top: 50%;
   left: 50%;
-  transform: translateX(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 2rem;
+
+  color: var(--color-text);
+  max-width: 500px;
+  width: 100%;
+}
+
+#form-close-btn {
+  display: block;
+  margin-left: auto;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.25rem 0 2rem;
+}
+
+#task-form .fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 1rem;
+}
+
+#task-form .fields label {
+  font-weight: bold;
+  font-size: 0.825rem;
+  text-transform: uppercase;
+
+  display: inline-block;
+  margin-left: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+textarea {
+  resize: none;
+}
+
+.title-wrapper,
+.desc-wrapper {
+  grid-column: 1 / 3;
+}
+
+#task-form-submit {
+  margin: auto;
+  margin-top: 2rem;
 }
