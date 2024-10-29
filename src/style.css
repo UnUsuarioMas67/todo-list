@@ -174,7 +174,7 @@ nav ul {
 .project-input {
   padding: 0.5rem;
   padding-right: 2rem;
-  
+
   font-size: inherit;
   color: inherit;
   background-color: var(--color-bg-light);
@@ -191,7 +191,7 @@ nav ul {
 .project-cancel-btn {
   display: flex;
   align-items: center;
-  
+
   position: absolute;
   right: 1.5rem;
 }
@@ -200,7 +200,7 @@ nav ul {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  
+
   background-color: var(--color-primary);
   color: var(--color-text);
   fill: var(--color-text);
@@ -237,14 +237,14 @@ h1 {
 
 .task {
   display: grid;
-  grid-template: 
+  grid-template:
     "checkbox title edit-btn delete-btn"
     ". desc . ."
     ". date . ."
     / 30px 1fr 30px 30px;
   gap: 0.5rem;
   align-items: center;
-  
+
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
@@ -321,6 +321,25 @@ h1 {
 
 .task-delete-btn {
   grid-area: delete-btn;
+}
+
+.task-checkbox {
+  appearance: none;
+  --size: 20px;
+
+  width: var(--size);
+  height: var(--size);
+  border: 2px solid var(--color-text-dark);
+  border-radius: 0.25rem;
+}
+
+.task-checkbox:checked {
+  box-shadow: inset var(--size) var(--size) var(--color-primary);
+  border: none;
+}
+
+.task-checkbox:checked::after {
+  content: url(assets/icons/check.svg);
 }
 
 main .primary-btn {
