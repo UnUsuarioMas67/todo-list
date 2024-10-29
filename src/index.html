@@ -35,8 +35,10 @@
     <nav>
       <ul id="project-list">
         <li>
-          <div class="project">
-            <button type="button" class="project-btn">Default</button>
+          <div class="project selected">
+            <div class="project-display">
+              <button type="button" class="project-btn">Default</button>
+            </div>
           </div>
         </li>
 
@@ -61,7 +63,7 @@
               </button>
             </div>
 
-            <div class="project-edit" hidden>
+            <div class="project-edit">
               <input type="text" class="project-input">
               <button type="button" class="project-cancel-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24">
@@ -94,7 +96,7 @@
               </button>
             </div>
 
-            <div class="project-edit" hidden>
+            <div class="project-edit">
               <input type="text" class="project-input">
               <button type="button" class="project-cancel-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24">
@@ -107,8 +109,8 @@
         </li>
 
         <li>
-          <div class="project">
-            <div class="project-display" hidden>
+          <div class="project editting">
+            <div class="project-display">
               <button type="button" class="project-btn">ProjectName</button>
 
               <button type="button" class="project-edit-btn">
@@ -141,7 +143,7 @@
       </ul>
     </nav>
 
-    <button class="add-new-btn" type="button">
+    <button class="primary-btn" type="button">
       Add New
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24">
         <title>plus</title>
@@ -154,7 +156,7 @@
     <div class="container">
       <h1>Project name</h1>
 
-      <div class="task-list">
+      <div id="task-list">
         <div class="task">
           <input type="checkbox" class="task-checkbox">
 
@@ -195,7 +197,7 @@
         </div>
       </div>
 
-      <button class="add-new-btn" type="button">
+      <button class="primary-btn" type="button">
         Add New
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24">
           <title>plus</title>
@@ -205,7 +207,7 @@
     </div>
   </main>
 
-  <dialog id="new-task-dialog" open>
+  <dialog id="new-task-dialog">
     <button type="button" class="form-close-btn">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32">
         <title>close</title>
@@ -239,7 +241,7 @@
         </select>
       </p>
 
-      <button type="submit" class="task-submit-btn">OK</button>
+      <button type="submit" class="primary-btn">OK</button>
     </form>
   </dialog>
 </body>

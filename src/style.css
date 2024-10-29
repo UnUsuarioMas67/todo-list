@@ -76,6 +76,145 @@ header {
 
 aside {
   border-right: 1px solid var(--color-border);
+  padding: 2rem 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+aside > h2,
+aside > nav {
+  width: 100%;
+}
+
+aside h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  font-size: 1rem;
+  text-transform: uppercase;
+  fill: var(--color-text);
+  padding-left: 2rem;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+.project {
+  font-size: 1.125rem;
+  color: var(--color-text);
+  fill: var(--color-text-dark);
+}
+
+.project.selected {
+  background-color: var(--color-primary);
+}
+
+.project button {
+  color: inherit;
+  fill: inherit;
+  background-color: transparent;
+  border: none;
+}
+
+.project svg {
+  width: 20px;
+}
+
+.project-display {
+  display: grid;
+  grid-template-columns: 1fr 30px 30px;
+  align-items: center;
+  padding-right: 1rem;
+
+  transition: background-color 0.2s;
+}
+
+.project.editting .project-display {
+  display: none;
+}
+
+.project-display:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.project-btn {
+  text-align: left;
+  padding: 0.5rem 0.5rem 0.5rem 3rem;
+  font-size: inherit;
+}
+
+.project-edit {
+  display: none;
+}
+
+.project.editting .project-edit {
+  display: flex;
+  align-items: center;
+
+  padding-left: 3rem;
+  padding-right: 1rem;
+
+  position: relative;
+}
+
+.project-input {
+  padding: 0.5rem;
+  padding-right: 2rem;
+  
+  font-size: inherit;
+  color: inherit;
+  background-color: var(--color-bg-light);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+
+  width: 100%;
+}
+
+.project-input:focus {
+  outline: 2px solid var(--color-text-dark);
+}
+
+.project-cancel-btn {
+  display: flex;
+  align-items: center;
+  
+  position: absolute;
+  right: 1.5rem;
+}
+
+.project button:not(.project-btn) {
+  transition: fill 0.2s;
+}
+
+.project button:not(.project-btn):hover {
+  fill: var(--color-text);
+}
+
+.primary-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  fill: var(--color-text);
+
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 3rem;
+
+  font-size: 1.125rem;
+
+  transition: filter 0.2s;
+}
+
+.primary-btn:hover {
+  filter: brightness(0.9);
 }
 
 dialog {
