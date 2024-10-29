@@ -114,11 +114,15 @@ nav ul {
   background-color: var(--color-primary);
 }
 
-.project button {
-  color: inherit;
-  fill: inherit;
+.icon-btn {
+  fill: var(--color-text-dark);
   background-color: transparent;
   border: none;
+  transition: fill 0.2s;
+}
+
+.icon-btn:hover {
+  fill: var(--color-text);
 }
 
 .project svg {
@@ -143,6 +147,11 @@ nav ul {
 }
 
 .project-btn {
+  color: inherit;
+  fill: inherit;
+  background-color: transparent;
+  border: none;
+
   text-align: left;
   padding: 0.5rem 0.5rem 0.5rem 3rem;
   font-size: inherit;
@@ -185,14 +194,6 @@ nav ul {
   
   position: absolute;
   right: 1.5rem;
-}
-
-.project button:not(.project-btn) {
-  transition: fill 0.2s;
-}
-
-.project button:not(.project-btn):hover {
-  fill: var(--color-text);
 }
 
 .primary-btn {
