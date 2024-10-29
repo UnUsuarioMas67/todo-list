@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Roboto";
+  src: url(assets/fonts/Roboto/Roboto-Regular.ttf);
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(assets/fonts/Roboto/Roboto-Bold.ttf);
+  font-style: normal;
+  font-weight: bold;
+}
+
 :root {
   --color-bg-dark: #171717;
   --color-bg-light: #262626;
@@ -19,12 +33,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
   display: grid;
   grid-template: 96px 1fr / minmax(210px, 1fr) 4fr;
   background-color: var(--color-bg-dark);
+  color: var(--color-text);
   min-height: 100vh;
 }
 
