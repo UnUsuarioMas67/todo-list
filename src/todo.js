@@ -54,24 +54,12 @@ class TodoList {
   defaultProject = new Project("Default");
   projects = [this.defaultProject];
 
-  pushProject(project) {
-    this.#projects.push(project);
+  addProject(project) {
+    this.projects.push(project);
   }
 
   removeProject(projectIndex) {
-    this.#projects.splice(projectIndex, 1);
-  }
-
-  get projects() {
-    return [...this.#projects];
-  }
-
-  pushTask(task, projectIndex) {
-    this.#projects[projectIndex].tasks.push(task);
-  }
-
-  removeTask(taskId, projectIndex) {
-    this.#projects[projectIndex].tasks.splice(taskId, 1);
+    this.projects.splice(projectIndex, 1);
   }
 
   saveToLocalStorage() {
