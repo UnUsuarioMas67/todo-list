@@ -1,3 +1,5 @@
+const { format, formatDistanceToNow, compareAsc } = require("date-fns");
+
 class Task {
   constructor(
     title,
@@ -12,6 +14,24 @@ class Task {
     this.priority = priority; // low, medium, high, top
 
     this.completed = completed;
+  }
+
+  get formattedDueDate() {
+    if (!this.dueDate) {
+      return "";
+    }
+
+    return format(this.dueDate, "P");
+  }
+
+  get dueDateDistance() {
+    if (!this.dueDate) {
+      return "";
+    }
+
+    return compareAsc(this.dueDate, new Date()) != -1
+      ? formatDistanceToNow(this.dueDate)
+      : "Expired";
   }
 }
 
