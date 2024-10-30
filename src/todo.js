@@ -40,6 +40,14 @@ class Project {
     this.name = name;
     this.tasks = tasks;
   }
+
+  addTask(newTask) {
+    this.tasks.push(newTask);
+  }
+
+  removeTask(taskIndex) {
+    this.tasks.splice(taskIndex, 1);
+  }
 }
 
 class TodoList {
