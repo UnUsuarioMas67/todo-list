@@ -51,7 +51,8 @@ class Project {
 }
 
 class TodoList {
-  #projects = [new Project("Default")];
+  defaultProject = new Project("Default");
+  projects = [this.defaultProject];
 
   pushProject(project) {
     this.#projects.push(project);
@@ -74,7 +75,7 @@ class TodoList {
   }
 
   saveToLocalStorage() {
-    localStorage.setItem("todo-projects", JSON.stringify(this.#projects));
+    localStorage.setItem("todo-projects", JSON.stringify(this.projects));
   }
 
   loadFromLocalStorage() {
