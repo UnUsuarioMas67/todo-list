@@ -1,4 +1,4 @@
-import "./style.css";
+import "../style.css";
 import { Task, Project, TodoList } from "./todo";
 
 window.addEventListener("load", initialize);
