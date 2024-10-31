@@ -37,14 +37,14 @@ function renderProjectList(todoList) {
   todoList.projects.forEach((project) => {
     const projectElem =
       project === todoList.defaultProject
-        ? renderDefaultProject(project)
-        : renderProject(project);
+        ? createDefaultProject(project)
+        : createProject(project);
 
     projectList.appendChild(projectElem);
   });
 }
 
-function renderDefaultProject(project) {
+function createDefaultProject(project) {
   const li = document.createElement("li");
 
   const projectElem = document.createElement("div");
@@ -68,7 +68,7 @@ function renderDefaultProject(project) {
   return li;
 }
 
-function renderProject(project) {
+function createProject(project) {
   const li = document.createElement("li");
 
   const projectElem = document.createElement("div");
