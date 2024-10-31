@@ -33,6 +33,11 @@ class Task {
       ? formatDistanceToNow(this.dueDate)
       : "Expired";
   }
+
+  static createFromObject(obj) {
+    const { title, description, dueDate, priority, completed } = obj;
+    return new Task(title, description, dueDate, priority, completed);
+  }
 }
 
 class Project {
@@ -47,6 +52,17 @@ class Project {
 
   removeTask(taskIndex) {
     this.tasks.splice(taskIndex, 1);
+  }
+
+  static createFromObject(obj) {
+    const { name, tasks } = obj;
+    const project = new Project(name);
+
+    tasks.forEach((t) => {
+      project.addTask(Task.createFromObject(t));
+    });
+
+    return project;
   }
 }
 
@@ -69,11 +85,18 @@ class TodoList {
   loadFromLocalStorage() {
     const item = localStorage.getItem("todo-projects");
     if (!item) {
-      this.#projects = [new Project("Default")];
+      this.projects = [this.defaultProject];
       return;
     }
 
-    this.#projects = JSON.parse(item);
+    this.projects = [];
+
+    const parsedItem = JSON.parse(item);
+    parsedItem.forEach((p) => {
+      this.addProject(Project.createFromObject(p));
+    });
+
+    this.defaultProject = this.projects[0];
   }
 }
 
