@@ -77,4 +77,4 @@ class TodoList {
   }
 }
 
-export default { Task, Project, TodoList };
+export { Task, Project, TodoList };
