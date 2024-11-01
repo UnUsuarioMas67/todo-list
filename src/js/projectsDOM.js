@@ -1,0 +1,83 @@
+import {
+  createEditBtn,
+  createDeleteBtn,
+  createCloseBtn,
+} from "./buttonsDOM.js";
+
+function createDefaultProjectElement(projectName) {
+  const li = document.createElement("li");
+
+  const projectElem = document.createElement("div");
+  projectElem.classList.add("project");
+  projectElem.id = "default-project";
+
+  li.appendChild(projectElem);
+
+  const display = document.createElement("div");
+  display.classList.add("project-display");
+
+  projectElem.appendChild(display);
+
+  const projectBtn = document.createElement("button");
+  projectBtn.classList.add("project-btn");
+  projectBtn.textContent = projectName;
+  // Handle click event here
+
+  display.appendChild(projectBtn);
+
+  return li;
+}
+
+function createProjectElement(projectName) {
+  const li = document.createElement("li");
+
+  const projectElem = document.createElement("div");
+  projectElem.classList.add("project");
+
+  li.appendChild(projectElem);
+
+  projectElem.appendChild(createProjectDisplay(projectName));
+  projectElem.appendChild(createProjectEdit(projectName));
+
+  return li;
+}
+
+function createProjectDisplay(projectName) {
+  const display = document.createElement("div");
+  display.classList.add("project-display");
+
+  const projectBtn = document.createElement("button");
+  projectBtn.classList.add("project-btn");
+  projectBtn.textContent = projectName;
+  // Handle click event here
+  display.appendChild(projectBtn);
+
+  const editBtn = createEditBtn();
+  editBtn.classList.add("project-edit-btn");
+  display.appendChild(editBtn);
+
+  const deleteBtn = createDeleteBtn();
+  deleteBtn.classList.add("project-delete-btn");
+  display.appendChild(deleteBtn);
+
+  return display;
+}
+
+function createProjectEdit(projectName) {
+  const edit = document.createElement("div");
+  edit.classList.add("project-edit");
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.classList.add("project-input");
+  input.value = projectName;
+  edit.appendChild(input);
+
+  const cancelBtn = createCloseBtn();
+  cancelBtn.classList.add("project-cancel-btn");
+  edit.appendChild(cancelBtn);
+
+  return edit;
+}
+
+export { createProjectElement, createDefaultProjectElement };
