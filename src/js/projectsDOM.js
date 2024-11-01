@@ -80,4 +80,42 @@ function createProjectEdit(projectName) {
   return edit;
 }
 
-export { createProjectElement, createDefaultProjectElement };
+function addProjectEventListeners(
+  project,
+  onClick,
+  onEditClick = null,
+  onDeleteClick = null,
+  onInputBlur = null,
+  onKeyDown = null,
+  onCancelClick = null
+) {
+  const projectBtn = project.querySelector(".project-btn");
+  if (!!projectBtn && !!onClick) {
+    projectBtn.addEventListener("click", onClick);
+  }
+
+  const editBtn = project.querySelector(".project-edit-btn");
+  if (!!editBtn && !!onEditClick) {
+    editBtn.addEventListener("click", onEditClick);
+  }
+
+  const deleteBtn = project.querySelector(".project-delete-btn");
+  if (!!deleteBtn && !!onDeleteClick) {
+    deleteBtn.addEventListener("click", onDeleteClick);
+  }
+
+  const input = project.querySelector(".project-input");
+  if (!!input && !!onInputBlur) {
+    input.addEventListener("blur", onInputBlur);
+  }
+  if (!!input && !!onKeyDown) {
+    input.addEventListener("keydown", onKeyDown);
+  }
+
+  const cancelBtn = project.querySelector(".project-cancel-btn");
+  if (!!cancelBtn && !!onCancelClick) {
+    cancelBtn.addEventListener("click", onCancelClick);
+  }
+}
+
+export { createProjectElement, createDefaultProjectElement, addProjectEventListeners };
