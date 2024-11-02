@@ -16,6 +16,9 @@ function initialize() {
 
   const defaultProject = document.querySelector("#default-project");
   defaultProject.classList.add("selected");
+
+  const newProjectBtn = document.querySelector("#new-project-btn");
+  newProjectBtn.addEventListener("click", () => addNewProject(todoList));
 }
 
 function renderAllContent(todoList) {
@@ -104,6 +107,31 @@ function deleteProject(projectElem, projectIndex, todoList) {
   todoList.removeProject(projectIndex);
 
   todoList.saveToLocalStorage();
+}
+
+function addNewProject(todoList) {
+  const project = new Project("New Project");
+  todoList.addProject(project);
+  
+  const projectList = document.querySelector("#project-list");
+  const element = createProjectElement(project.name);
+  const projectElem = element.querySelector(".project")
+  
+  addProjectEventListeners(
+    element,
+    () => handleProjectClick(projectElem, project),
+    () => enterProjectEditMode(projectElem, project.name),
+    () => deleteProject(projectElem, todoList.projects.indexOf(project), todoList),
+    () => exitProjectEdit(projectElem),
+    () => exitProjectEdit(projectElem),
+    (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
+  );
+
+  projectList.appendChild(element);
+
+  todoList.saveToLocalStorage()
+
+  enterProjectEditMode(element.querySelector(".project"))
 }
 
 function addDummyContent(todoList) {
