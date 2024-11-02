@@ -3,6 +3,7 @@ import { Task, Project, TodoList } from "./todo.js";
 import {
   createProjectElement,
   createDefaultProjectElement,
+  addProjectEventListeners,
 } from "./projectsDOM.js";
 
 window.addEventListener("load", initialize);
@@ -12,6 +13,7 @@ function initialize() {
   todoList.loadFromLocalStorage();
 
   renderAllContent(todoList);
+
   const defaultProject = document.querySelector("#default-project");
   defaultProject.classList.add("selected");
 }
@@ -24,14 +26,84 @@ function renderProjectList(todoList) {
   const projectList = document.querySelector("#project-list");
   projectList.textContent = "";
 
-  todoList.projects.forEach((project) => {
-    const projectElem =
+  todoList.projects.forEach((project, index) => {
+    const element =
       project === todoList.defaultProject
         ? createDefaultProjectElement(project.name)
         : createProjectElement(project.name);
 
-    projectList.appendChild(projectElem);
+    const projectElem = element.querySelector(".project");
+
+    addProjectEventListeners(
+      element,
+      () => handleProjectClick(projectElem, project),
+      () => enterProjectEditMode(projectElem, project.name),
+      () => deleteProject(projectElem, index, todoList),
+      () => exitProjectEdit(projectElem),
+      () => exitProjectEdit(projectElem),
+      (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
+    );
+
+    projectList.appendChild(element);
   });
+}
+
+function handleProjectClick(projectElem, projectData) {
+  selectProject(projectElem);
+}
+
+function selectProject(projectElem) {
+  const projectElems = document.querySelectorAll(".project");
+
+  projectElems.forEach((elem) => {
+    if (elem === projectElem) {
+      elem.classList.add("selected");
+    } else {
+      elem.classList.remove("selected");
+    }
+  });
+}
+
+function enterProjectEditMode(projectElem, projectName = "New Project") {
+  projectElem.classList.add("editting");
+
+  const input = projectElem.querySelector(".project-input");
+  input.value = projectName;
+  input.select();
+}
+
+function exitProjectEdit(projectElem) {
+  projectElem.classList.remove("editting");
+}
+
+function confirmProjectEdit(inputElem, projectElem, projectData, todoList) {
+  if (inputElem.value.trim() === "") {
+    inputElem.value = projectData.name;
+    return;
+  }
+
+  const projectBtn = projectElem.querySelector(".project-btn");
+
+  projectBtn.textContent = inputElem.value;
+  projectData.name = inputElem.value;
+
+  todoList.saveToLocalStorage();
+}
+
+function handleProjectEditKeyDown(event, projectElem, projectData, todoList) {
+  if (event.key === "Escape") {
+    exitProjectEdit(projectElem);
+  } else if (event.key === "Enter") {
+    confirmProjectEdit(event.target, projectElem, projectData, todoList);
+    exitProjectEdit(projectElem);
+  }
+}
+
+function deleteProject(projectElem, projectIndex, todoList) {
+  projectElem.closest("li").remove();
+  todoList.removeProject(projectIndex);
+
+  todoList.saveToLocalStorage();
 }
 
 function addDummyContent(todoList) {
