@@ -14,8 +14,6 @@ function initialize() {
   renderAllContent(todoList);
   const defaultProject = document.querySelector("#default-project");
   defaultProject.classList.add("selected");
-
-  todoList.saveToLocalStorage();
 }
 
 function renderAllContent(todoList) {
