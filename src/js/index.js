@@ -5,6 +5,7 @@ import {
   createDefaultProjectElement,
   addProjectEventListeners,
 } from "./projectsDOM.js";
+import { createTaskElement } from "./tasksDOM.js";
 
 window.addEventListener("load", initialize);
 
@@ -15,7 +16,7 @@ function initialize() {
   renderAllContent(todoList);
 
   const defaultProject = document.querySelector("#default-project");
-  defaultProject.classList.add("selected");
+  selectProject(defaultProject, todoList.defaultProject);
 
   const newProjectBtn = document.querySelector("#new-project-btn");
   newProjectBtn.addEventListener("click", () => addNewProject(todoList));
@@ -62,10 +63,10 @@ function renderProject(project, index, todoList, edit = false) {
 }
 
 function handleProjectClick(projectElem, projectData) {
-  selectProject(projectElem);
+  selectProject(projectElem, projectData);
 }
 
-function selectProject(projectElem) {
+function selectProject(projectElem, projectData) {
   const projectElems = document.querySelectorAll(".project");
 
   projectElems.forEach((elem) => {
@@ -75,6 +76,8 @@ function selectProject(projectElem) {
       elem.classList.remove("selected");
     }
   });
+
+  renderTaskList(projectData);
 }
 
 function enterProjectEditMode(projectElem, projectName = "New Project") {
@@ -126,6 +129,25 @@ function addNewProject(todoList) {
   renderProject(project, todoList.projects.indexOf(project), todoList, true);
 
   todoList.saveToLocalStorage();
+}
+
+function renderTaskList(project) {
+  const taskList = document.querySelector("#task-list");
+  taskList.textContent = "";
+
+  const h1 = document.querySelector("h1");
+  h1.textContent = project.name;
+
+  project.tasks.forEach((task, index) => {
+    renderTask(task, index, project);
+  });
+}
+
+function renderTask(task, index, project) {
+  const taskElem = createTaskElement(task);
+
+  const taskList = document.querySelector("#task-list");
+  taskList.appendChild(taskElem);
 }
 
 function addDummyContent(todoList) {
