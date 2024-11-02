@@ -30,26 +30,35 @@ function renderProjectList(todoList) {
   projectList.textContent = "";
 
   todoList.projects.forEach((project, index) => {
-    const projectElem =
-      project === todoList.defaultProject
-        ? createDefaultProjectElement(project.name)
-        : createProjectElement(project.name);
-
-    addProjectEventListeners(
-      projectElem,
-      () => handleProjectClick(projectElem, project),
-      () => enterProjectEditMode(projectElem, project.name),
-      () => deleteProject(projectElem, index, todoList),
-      () => exitProjectEdit(projectElem),
-      () => exitProjectEdit(projectElem),
-      (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
-    );
-
-    const li = document.createElement("li");
-    li.appendChild(projectElem);
-
-    projectList.appendChild(li);
+    renderProject(project, index, todoList);
   });
+}
+
+function renderProject(project, index, todoList, edit = false) {
+  const projectElem =
+    project === todoList.defaultProject
+      ? createDefaultProjectElement(project.name)
+      : createProjectElement(project.name);
+
+  addProjectEventListeners(
+    projectElem,
+    () => handleProjectClick(projectElem, project),
+    () => enterProjectEditMode(projectElem, project.name),
+    () => deleteProject(projectElem, index, todoList),
+    () => exitProjectEdit(projectElem),
+    () => exitProjectEdit(projectElem),
+    (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
+  );
+
+  const li = document.createElement("li");
+  li.appendChild(projectElem);
+
+  const projectList = document.querySelector("#project-list");
+  projectList.appendChild(li);
+
+  if (edit) {
+    enterProjectEditMode(projectElem);
+  }
 }
 
 function handleProjectClick(projectElem, projectData) {
@@ -114,27 +123,9 @@ function addNewProject(todoList) {
   const project = new Project("New Project");
   todoList.addProject(project);
 
-  const projectList = document.querySelector("#project-list");
-  const projectElem = createProjectElement(project.name);
-
-  addProjectEventListeners(
-    projectElem,
-    () => handleProjectClick(projectElem, project),
-    () => enterProjectEditMode(projectElem, project.name),
-    () =>
-      deleteProject(projectElem, todoList.projects.indexOf(project), todoList),
-    () => exitProjectEdit(projectElem),
-    () => exitProjectEdit(projectElem),
-    (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
-  );
-
-  const li = document.createElement("li");
-  li.appendChild(projectElem);
-  projectList.appendChild(li);
+  renderProject(project, todoList.projects.indexOf(project), todoList, true);
 
   todoList.saveToLocalStorage();
-
-  enterProjectEditMode(projectElem);
 }
 
 function addDummyContent(todoList) {
