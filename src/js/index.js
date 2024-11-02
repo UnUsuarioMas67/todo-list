@@ -9,6 +9,10 @@ import { createTaskElement } from "./tasksDOM.js";
 
 window.addEventListener("load", initialize);
 
+const newTaskDialog = document.querySelector("#new-task-dialog");
+const formCloseBtn = document.querySelector("#form-close-btn");
+formCloseBtn.addEventListener("click", () => newTaskDialog.close());
+
 function initialize() {
   const todoList = new TodoList();
   todoList.loadFromLocalStorage();
@@ -20,6 +24,11 @@ function initialize() {
 
   const newProjectBtn = document.querySelector("#new-project-btn");
   newProjectBtn.addEventListener("click", () => addNewProject(todoList));
+  
+  const newTaskBtn = document.querySelector("#new-task-btn");
+  newTaskBtn.addEventListener("click", () => {
+    newTaskDialog.showModal();
+  });
 }
 
 function renderAllContent(todoList) {
