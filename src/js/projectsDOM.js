@@ -85,9 +85,9 @@ function addProjectEventListeners(
   onClick,
   onEditClick = null,
   onDeleteClick = null,
+  onCancelClick = null,
   onInputBlur = null,
-  onKeyDown = null,
-  onCancelClick = null
+  onKeyDown = null
 ) {
   const projectBtn = project.querySelector(".project-btn");
   if (!!projectBtn && !!onClick) {
