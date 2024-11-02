@@ -30,15 +30,13 @@ function renderProjectList(todoList) {
   projectList.textContent = "";
 
   todoList.projects.forEach((project, index) => {
-    const element =
+    const projectElem =
       project === todoList.defaultProject
         ? createDefaultProjectElement(project.name)
         : createProjectElement(project.name);
 
-    const projectElem = element.querySelector(".project");
-
     addProjectEventListeners(
-      element,
+      projectElem,
       () => handleProjectClick(projectElem, project),
       () => enterProjectEditMode(projectElem, project.name),
       () => deleteProject(projectElem, index, todoList),
@@ -47,7 +45,10 @@ function renderProjectList(todoList) {
       (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
     );
 
-    projectList.appendChild(element);
+    const li = document.createElement("li");
+    li.appendChild(projectElem);
+
+    projectList.appendChild(li);
   });
 }
 
@@ -112,26 +113,28 @@ function deleteProject(projectElem, projectIndex, todoList) {
 function addNewProject(todoList) {
   const project = new Project("New Project");
   todoList.addProject(project);
-  
+
   const projectList = document.querySelector("#project-list");
-  const element = createProjectElement(project.name);
-  const projectElem = element.querySelector(".project")
-  
+  const projectElem = createProjectElement(project.name);
+
   addProjectEventListeners(
-    element,
+    projectElem,
     () => handleProjectClick(projectElem, project),
     () => enterProjectEditMode(projectElem, project.name),
-    () => deleteProject(projectElem, todoList.projects.indexOf(project), todoList),
+    () =>
+      deleteProject(projectElem, todoList.projects.indexOf(project), todoList),
     () => exitProjectEdit(projectElem),
     () => exitProjectEdit(projectElem),
     (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
   );
 
-  projectList.appendChild(element);
+  const li = document.createElement("li");
+  li.appendChild(projectElem);
+  projectList.appendChild(li);
 
-  todoList.saveToLocalStorage()
+  todoList.saveToLocalStorage();
 
-  enterProjectEditMode(element.querySelector(".project"))
+  enterProjectEditMode(projectElem);
 }
 
 function addDummyContent(todoList) {

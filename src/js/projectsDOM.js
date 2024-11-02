@@ -5,13 +5,9 @@ import {
 } from "./buttonsDOM.js";
 
 function createDefaultProjectElement(projectName) {
-  const li = document.createElement("li");
-
   const projectElem = document.createElement("div");
   projectElem.classList.add("project");
   projectElem.id = "default-project";
-
-  li.appendChild(projectElem);
 
   const display = document.createElement("div");
   display.classList.add("project-display");
@@ -25,21 +21,17 @@ function createDefaultProjectElement(projectName) {
 
   display.appendChild(projectBtn);
 
-  return li;
+  return projectElem;
 }
 
 function createProjectElement(projectName) {
-  const li = document.createElement("li");
-
   const projectElem = document.createElement("div");
   projectElem.classList.add("project");
-
-  li.appendChild(projectElem);
 
   projectElem.appendChild(createProjectDisplay(projectName));
   projectElem.appendChild(createProjectEdit(projectName));
 
-  return li;
+  return projectElem;
 }
 
 function createProjectDisplay(projectName) {
