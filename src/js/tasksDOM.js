@@ -18,28 +18,33 @@ function createTaskElement(task) {
   title.textContent = task.title;
   header.appendChild(title);
 
-  const priority = document.createElement("span");
-  priority.classList.add("task-priority", task.priority);
-  priority.textContent = task.priority;
-  header.appendChild(priority);
+  if (!!task.priority && task.priority !== "none") {
+    const priority = document.createElement("span");
+    priority.classList.add("task-priority", task.priority);
+    priority.textContent = task.priority;
+    header.appendChild(priority);
+  }
 
   const description = document.createElement("p");
   description.classList.add("task-description");
   description.textContent = task.description;
   taskElem.appendChild(description);
 
-  const dueDate = document.createElement("p");
-  dueDate.classList.add("task-date");
+  if (!!task.dueDate) {
+    const dueDate = document.createElement("p");
+    dueDate.classList.add("task-date");
+  
+    const calendar = createCalendarIcon();
+    dueDate.appendChild(calendar);
+  
+    const dateText = document.createTextNode(
+      `${task.formattedDueDate} - ${task.dueDateDistance}`
+    );
+    dueDate.appendChild(dateText);
+  
+    taskElem.appendChild(dueDate);
+  }
 
-  const calendar = createCalendarIcon();
-  dueDate.appendChild(calendar);
-
-  const dateText = document.createTextNode(
-    `${task.formattedDueDate} - ${task.dueDateDistance}`
-  );
-  dueDate.appendChild(dateText);
-
-  taskElem.appendChild(dueDate);
 
   const editBtn = createEditBtn();
   editBtn.classList.add("task-edit-btn");
