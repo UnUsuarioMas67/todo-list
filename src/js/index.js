@@ -25,13 +25,13 @@ let selectedProject;
 function initialize() {
   todoList.loadFromLocalStorage();
 
-  renderProjectList(todoList);
+  renderProjectList();
 
   const defaultProject = document.querySelector("#default-project");
   selectProject(defaultProject, todoList.defaultProject);
 
   const newProjectBtn = document.querySelector("#new-project-btn");
-  newProjectBtn.addEventListener("click", () => addNewProject(todoList));
+  newProjectBtn.addEventListener("click", () => addNewProject());
 
   const newTaskBtn = document.querySelector("#new-task-btn");
   newTaskBtn.addEventListener("click", () => {
@@ -39,15 +39,15 @@ function initialize() {
   });
 }
 
-function renderProjectList(todoList) {
+function renderProjectList() {
   projectList.textContent = "";
 
   todoList.projects.forEach((project, index) => {
-    renderProject(project, index, todoList);
+    renderProject(project, index);
   });
 }
 
-function renderProject(project, index, todoList, edit = false) {
+function renderProject(project, index, edit = false) {
   const projectElem =
     project === todoList.defaultProject
       ? createDefaultProjectElement(project.name)
@@ -57,7 +57,7 @@ function renderProject(project, index, todoList, edit = false) {
     projectElem,
     () => handleProjectClick(projectElem, project),
     () => enterProjectEditMode(projectElem, project.name),
-    () => deleteProject(projectElem, index, todoList),
+    () => deleteProject(projectElem, index),
     () => exitProjectEdit(projectElem),
     () => exitProjectEdit(projectElem),
     (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
@@ -104,7 +104,7 @@ function exitProjectEdit(projectElem) {
   projectElem.classList.remove("editting");
 }
 
-function confirmProjectEdit(inputElem, projectElem, projectData, todoList) {
+function confirmProjectEdit(inputElem, projectElem, projectData) {
   if (inputElem.value.trim() === "") {
     inputElem.value = projectData.name;
     return;
@@ -118,23 +118,23 @@ function confirmProjectEdit(inputElem, projectElem, projectData, todoList) {
   todoList.saveToLocalStorage();
 }
 
-function handleProjectEditKeyDown(event, projectElem, projectData, todoList) {
+function handleProjectEditKeyDown(event, projectElem, projectData) {
   if (event.key === "Escape") {
     exitProjectEdit(projectElem);
   } else if (event.key === "Enter") {
-    confirmProjectEdit(event.target, projectElem, projectData, todoList);
+    confirmProjectEdit(event.target, projectElem, projectData);
     exitProjectEdit(projectElem);
   }
 }
 
-function deleteProject(projectElem, projectIndex, todoList) {
+function deleteProject(projectElem, projectIndex) {
   projectElem.closest("li").remove();
   todoList.removeProject(projectIndex);
 
   todoList.saveToLocalStorage();
 }
 
-function addNewProject(todoList) {
+function addNewProject() {
   const project = new Project("New Project");
   todoList.addProject(project);
 
@@ -187,13 +187,23 @@ function handleFormSubmit() {
 function addDummyContent(todoList) {
   const project = new Project("Dummy Project");
   project.addTask(
-    new Task("Dummy Task", "description", new Date("2025/20/2"), "high")
+    new Task("Dummy Task", "description", new Date("2025/2/20"), "high")
+  );
+  project.addTask(
+    new Task(
+      "Another Task",
+      "this is another task",
+      new Date("2024/11/10"),
+      "top"
+    )
+  );
+  project.addTask(
+    new Task(
+      "Third Task",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      new Date("2024/12/1"),
+      "low"
+    )
   );
   todoList.addProject(project);
-
-  const project2 = new Project("Dummy Project2");
-  project2.addTask(
-    new Task("Dummy Task", "description", new Date("2025/20/2"), "high")
-  );
-  todoList.addProject(project2);
 }
