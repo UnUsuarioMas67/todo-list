@@ -9,6 +9,9 @@ import { createTaskElement } from "./tasksDOM.js";
 
 window.addEventListener("load", initialize);
 
+const projectList = document.querySelector("#project-list");
+const taskList = document.querySelector("#task-list");
+
 const newTaskDialog = document.querySelector("#new-task-dialog");
 const formCloseBtn = document.querySelector("#form-close-btn");
 formCloseBtn.addEventListener("click", () => newTaskDialog.close());
@@ -17,7 +20,7 @@ function initialize() {
   const todoList = new TodoList();
   todoList.loadFromLocalStorage();
 
-  renderAllContent(todoList);
+  renderProjectList(todoList);
 
   const defaultProject = document.querySelector("#default-project");
   selectProject(defaultProject, todoList.defaultProject);
@@ -31,12 +34,7 @@ function initialize() {
   });
 }
 
-function renderAllContent(todoList) {
-  renderProjectList(todoList);
-}
-
 function renderProjectList(todoList) {
-  const projectList = document.querySelector("#project-list");
   projectList.textContent = "";
 
   todoList.projects.forEach((project, index) => {
@@ -63,7 +61,6 @@ function renderProject(project, index, todoList, edit = false) {
   const li = document.createElement("li");
   li.appendChild(projectElem);
 
-  const projectList = document.querySelector("#project-list");
   projectList.appendChild(li);
 
   if (edit) {
@@ -141,7 +138,6 @@ function addNewProject(todoList) {
 }
 
 function renderTaskList(project) {
-  const taskList = document.querySelector("#task-list");
   taskList.textContent = "";
 
   const h1 = document.querySelector("h1");
@@ -155,7 +151,6 @@ function renderTaskList(project) {
 function renderTask(task, index, project) {
   const taskElem = createTaskElement(task);
 
-  const taskList = document.querySelector("#task-list");
   taskList.appendChild(taskElem);
 }
 
