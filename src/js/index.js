@@ -5,7 +5,7 @@ import {
   createDefaultProjectElement,
   addProjectEventListeners,
 } from "./projectsDOM.js";
-import { createTaskElement } from "./tasksDOM.js";
+import { addTaskEventListeners, createTaskElement } from "./tasksDOM.js";
 
 window.addEventListener("load", initialize);
 
@@ -157,7 +157,32 @@ function renderTaskList(project) {
 function renderTask(task, index, project) {
   const taskElem = createTaskElement(task);
 
+  addTaskEventListeners(
+    taskElem,
+    (e) => handleTaskCheckboxChange(e, task),
+    (e) => handleTaskEditClick(e, task),
+    () => deleteTask(taskElem, index, project)
+  );
+
   taskList.appendChild(taskElem);
+}
+
+function handleTaskCheckboxChange(event, task) {
+  const checkboxValue = event.target.checked;
+  task.completed = checkboxValue;
+
+  todoList.saveToLocalStorage();
+}
+
+function handleTaskEditClick(task) {
+  
+}
+
+function deleteTask(taskElem, taskIndex, project) {
+  taskElem.remove();
+  project.removeTask(taskIndex);
+
+  todoList.saveToLocalStorage();
 }
 
 function handleFormSubmit() {

@@ -7,6 +7,7 @@ function createTaskElement(task) {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.classList.add("task-checkbox");
+  checkbox.checked = task.completed;
   taskElem.appendChild(checkbox);
 
   const header = document.createElement("p");
@@ -33,18 +34,17 @@ function createTaskElement(task) {
   if (!!task.dueDate) {
     const dueDate = document.createElement("p");
     dueDate.classList.add("task-date");
-  
+
     const calendar = createCalendarIcon();
     dueDate.appendChild(calendar);
-  
+
     const dateText = document.createTextNode(
       `${task.formattedDueDate} - ${task.dueDateDistance}`
     );
     dueDate.appendChild(dateText);
-  
+
     taskElem.appendChild(dueDate);
   }
-
 
   const editBtn = createEditBtn();
   editBtn.classList.add("task-edit-btn");
@@ -68,4 +68,20 @@ function createCalendarIcon() {
   return span;
 }
 
-export { createTaskElement };
+function addTaskEventListeners(
+  taskElem,
+  onCheckboxChange,
+  onEditClick,
+  onDeleteClick
+) {
+  const checkbox = taskElem.querySelector(".task-checkbox");
+  checkbox.addEventListener("change", onCheckboxChange);
+
+  const editBtn = taskElem.querySelector(".task-edit-btn");
+  editBtn.addEventListener("click", onEditClick);
+
+  const deleteBtn = taskElem.querySelector(".task-delete-btn");
+  deleteBtn.addEventListener("click", onDeleteClick);
+}
+
+export { createTaskElement, addTaskEventListeners };
