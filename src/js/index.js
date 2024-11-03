@@ -16,8 +16,13 @@ const newTaskDialog = document.querySelector("#new-task-dialog");
 const formCloseBtn = document.querySelector("#form-close-btn");
 formCloseBtn.addEventListener("click", () => newTaskDialog.close());
 
+const taskForm = document.querySelector("#task-form");
+taskForm.addEventListener("submit", handleFormSubmit);
+
+const todoList = new TodoList();
+let selectedProject;
+
 function initialize() {
-  const todoList = new TodoList();
   todoList.loadFromLocalStorage();
 
   renderProjectList(todoList);
@@ -27,7 +32,7 @@ function initialize() {
 
   const newProjectBtn = document.querySelector("#new-project-btn");
   newProjectBtn.addEventListener("click", () => addNewProject(todoList));
-  
+
   const newTaskBtn = document.querySelector("#new-task-btn");
   newTaskBtn.addEventListener("click", () => {
     newTaskDialog.showModal();
@@ -84,6 +89,7 @@ function selectProject(projectElem, projectData) {
   });
 
   renderTaskList(projectData);
+  selectedProject = projectData;
 }
 
 function enterProjectEditMode(projectElem, projectName = "New Project") {
@@ -152,6 +158,30 @@ function renderTask(task, index, project) {
   const taskElem = createTaskElement(task);
 
   taskList.appendChild(taskElem);
+}
+
+function handleFormSubmit() {
+  const title = taskForm.querySelector("#title");
+  const description = taskForm.querySelector("#description");
+  const dueDate = taskForm.querySelector("#due-date");
+  const priority = taskForm.querySelector("#priority");
+
+  const task = new Task(
+    title.value,
+    description.value,
+    dueDate.value,
+    priority.value
+  );
+
+  title.value = "";
+  description.value = "";
+  dueDate.value = null;
+  priority.value = "none";
+
+  selectedProject.addTask(task);
+  renderTaskList(selectedProject);
+
+  todoList.saveToLocalStorage();
 }
 
 function addDummyContent(todoList) {
