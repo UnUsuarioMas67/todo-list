@@ -70,6 +70,12 @@ class TodoList {
   defaultProject = new Project("Default");
   projects = [this.defaultProject];
 
+  constructor() {
+    this.defaultProject.addTask(
+      new Task("Get started now", "Try adding new projects and tasks to manage")
+    );
+  }
+
   addProject(project) {
     this.projects.push(project);
   }
