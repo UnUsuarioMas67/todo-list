@@ -115,6 +115,8 @@ function confirmProjectEdit(inputElem, projectElem, projectData) {
   projectBtn.textContent = inputElem.value;
   projectData.name = inputElem.value;
 
+  renderProjectNameHeading(projectData);
+
   todoList.saveToLocalStorage();
 }
 
@@ -143,11 +145,15 @@ function addNewProject() {
   todoList.saveToLocalStorage();
 }
 
+function renderProjectNameHeading(project) {
+  const h1 = document.querySelector("h1");
+  h1.textContent = project.name;
+}
+
 function renderTaskList(project) {
   taskList.textContent = "";
 
-  const h1 = document.querySelector("h1");
-  h1.textContent = project.name;
+  renderProjectNameHeading(project);
 
   project.tasks.forEach((task, index) => {
     renderTask(task, index, project);
