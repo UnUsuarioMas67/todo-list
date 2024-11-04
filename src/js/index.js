@@ -115,7 +115,7 @@ function confirmProjectEdit(inputElem, projectDOM, project) {
   projectBtn.textContent = inputElem.value;
   project.name = inputElem.value;
 
-  renderProjectNameHeading(project);
+  renderProjectNameHeading(selectedProject);
   exitProjectEdit(projectDOM);
 
   todoList.saveToLocalStorage();
