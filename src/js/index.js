@@ -60,7 +60,7 @@ function renderProject(project, index, edit = false) {
     () => deleteProject(projectDOM, index),
     () => exitProjectEdit(projectDOM),
     () => exitProjectEdit(projectDOM),
-    (e) => handleProjectEditKeyDown(e, projectDOM, project, todoList)
+    (e) => handleProjectEditKeyDown(e, projectDOM, project)
   );
 
   const li = document.createElement("li");
@@ -140,7 +140,7 @@ function addNewProject() {
   const project = new Project("New Project");
   todoList.addProject(project);
 
-  renderProject(project, todoList.projects.indexOf(project), todoList, true);
+  renderProject(project, todoList.projects.indexOf(project), true);
 
   todoList.saveToLocalStorage();
 }
@@ -215,7 +215,7 @@ function handleFormSubmit() {
   todoList.saveToLocalStorage();
 }
 
-function addDummyContent(todoList) {
+function addDummyContent() {
   const project = new Project("Dummy Project");
   project.addTask(
     new Task("Dummy Task", "description", new Date("2025/2/20"), "high")
