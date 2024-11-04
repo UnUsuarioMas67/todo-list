@@ -48,89 +48,89 @@ function renderProjectList() {
 }
 
 function renderProject(project, index, edit = false) {
-  const projectElem =
+  const projectDOM =
     project === todoList.defaultProject
       ? createDefaultProjectElement(project.name)
       : createProjectElement(project.name);
 
   addProjectEventListeners(
-    projectElem,
-    () => handleProjectClick(projectElem, project),
-    () => enterProjectEditMode(projectElem, project.name),
-    () => deleteProject(projectElem, index),
-    () => exitProjectEdit(projectElem),
-    () => exitProjectEdit(projectElem),
-    (e) => handleProjectEditKeyDown(e, projectElem, project, todoList)
+    projectDOM,
+    () => handleProjectClick(projectDOM, project),
+    () => enterProjectEditMode(projectDOM, project.name),
+    () => deleteProject(projectDOM, index),
+    () => exitProjectEdit(projectDOM),
+    () => exitProjectEdit(projectDOM),
+    (e) => handleProjectEditKeyDown(e, projectDOM, project, todoList)
   );
 
   const li = document.createElement("li");
-  li.appendChild(projectElem);
+  li.appendChild(projectDOM);
 
   projectList.appendChild(li);
 
   if (edit) {
-    enterProjectEditMode(projectElem);
+    enterProjectEditMode(projectDOM);
   }
 }
 
-function handleProjectClick(projectElem, projectData) {
-  selectProject(projectElem, projectData);
+function handleProjectClick(projectDOM, project) {
+  selectProject(projectDOM, project);
 }
 
-function selectProject(projectElem, projectData) {
+function selectProject(projectDOM, project) {
   const projectElems = document.querySelectorAll(".project");
 
   projectElems.forEach((elem) => {
-    if (elem === projectElem) {
+    if (elem === projectDOM) {
       elem.classList.add("selected");
     } else {
       elem.classList.remove("selected");
     }
   });
 
-  renderTaskList(projectData);
-  selectedProject = projectData;
+  renderTaskList(project);
+  selectedProject = project;
 }
 
-function enterProjectEditMode(projectElem, projectName = "New Project") {
-  projectElem.classList.add("editting");
+function enterProjectEditMode(projectDOM, projectName = "New Project") {
+  projectDOM.classList.add("editting");
 
-  const input = projectElem.querySelector(".project-input");
+  const input = projectDOM.querySelector(".project-input");
   input.value = projectName;
   input.select();
 }
 
-function exitProjectEdit(projectElem) {
-  projectElem.classList.remove("editting");
+function exitProjectEdit(projectDOM) {
+  projectDOM.classList.remove("editting");
 }
 
-function confirmProjectEdit(inputElem, projectElem, projectData) {
+function confirmProjectEdit(inputElem, projectDOM, project) {
   if (inputElem.value.trim() === "") {
-    inputElem.value = projectData.name;
+    inputElem.value = project.name;
     return;
   }
 
-  const projectBtn = projectElem.querySelector(".project-btn");
+  const projectBtn = projectDOM.querySelector(".project-btn");
 
   projectBtn.textContent = inputElem.value;
-  projectData.name = inputElem.value;
+  project.name = inputElem.value;
 
-  renderProjectNameHeading(projectData);
+  renderProjectNameHeading(project);
 
   todoList.saveToLocalStorage();
 }
 
-function handleProjectEditKeyDown(event, projectElem, projectData) {
+function handleProjectEditKeyDown(event, projectDOM, project) {
   if (event.key === "Escape") {
-    exitProjectEdit(projectElem);
+    exitProjectEdit(projectDOM);
   } else if (event.key === "Enter") {
-    confirmProjectEdit(event.target, projectElem, projectData);
-    exitProjectEdit(projectElem);
+    confirmProjectEdit(event.target, projectDOM, project);
+    exitProjectEdit(projectDOM);
   }
 }
 
-function deleteProject(projectElem, projectIndex) {
-  projectElem.closest("li").remove();
+function deleteProject(projectDOM, projectIndex) {
+  projectDOM.closest("li").remove();
   todoList.removeProject(projectIndex);
 
   todoList.saveToLocalStorage();
