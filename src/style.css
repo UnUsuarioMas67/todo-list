@@ -272,6 +272,10 @@ h1 {
   background-color: var(--color-bg-light);
 }
 
+.task.expanded {
+  border-color: var(--color-text-dark);
+}
+
 .task-checkbox {
   grid-area: checkbox;
   /* Style this later */

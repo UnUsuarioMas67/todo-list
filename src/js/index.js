@@ -171,6 +171,17 @@ function renderTask(task, index, project) {
     () => deleteTask(taskElem, index, project)
   );
 
+  taskElem.addEventListener("click", () => {
+    const tasks = document.querySelectorAll(".task");
+    for (const t of tasks) {
+      if (t === taskElem) {
+        t.classList.toggle("expanded");
+      } else {
+        t.classList.remove("expanded");
+      }
+    }
+  });
+
   taskList.appendChild(taskElem);
 }
 
