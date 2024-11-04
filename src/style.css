@@ -130,8 +130,8 @@ nav ul {
 }
 
 .project-display {
-  display: grid;
-  grid-template-columns: 1fr 30px 30px;
+  display: flex;
+
   align-items: center;
   padding-right: 1rem;
 
@@ -147,6 +147,8 @@ nav ul {
 }
 
 .project-btn {
+  flex-grow: 1;
+
   color: inherit;
   fill: inherit;
   background-color: transparent;
@@ -155,6 +157,12 @@ nav ul {
   text-align: left;
   padding: 0.5rem 0.5rem 0.5rem 3rem;
   font-size: inherit;
+}
+
+.project-display .icon-btn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
 }
 
 .project-edit {
@@ -233,6 +241,7 @@ textarea:focus {
 main .container {
   max-width: 900px;
   margin: 3rem auto 0;
+  padding: 0 2rem;
 }
 
 h1 {
@@ -286,6 +295,7 @@ h1 {
   color: var(--color-priority-text);
   font-size: 0.75rem;
   font-weight: bold;
+  text-transform: capitalize;
 }
 
 .task-priority.top {
