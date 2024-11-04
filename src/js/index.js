@@ -59,7 +59,7 @@ function renderProject(project, index, edit = false) {
     () => enterProjectEditMode(projectDOM, project.name),
     () => deleteProject(projectDOM, index),
     () => exitProjectEdit(projectDOM),
-    () => exitProjectEdit(projectDOM),
+    (e) => confirmProjectEdit(e.target, projectDOM, project),
     (e) => handleProjectEditKeyDown(e, projectDOM, project)
   );
 
@@ -116,6 +116,7 @@ function confirmProjectEdit(inputElem, projectDOM, project) {
   project.name = inputElem.value;
 
   renderProjectNameHeading(project);
+  exitProjectEdit(projectDOM);
 
   todoList.saveToLocalStorage();
 }
@@ -125,7 +126,6 @@ function handleProjectEditKeyDown(event, projectDOM, project) {
     exitProjectEdit(projectDOM);
   } else if (event.key === "Enter") {
     confirmProjectEdit(event.target, projectDOM, project);
-    exitProjectEdit(projectDOM);
   }
 }
 
