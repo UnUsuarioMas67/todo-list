@@ -21,6 +21,7 @@ taskForm.addEventListener("submit", handleFormSubmit);
 
 const todoList = new TodoList();
 let selectedProject;
+let editedTask = null;
 
 function initialize() {
   todoList.loadFromLocalStorage();
@@ -35,7 +36,7 @@ function initialize() {
 
   const newTaskBtn = document.querySelector("#new-task-btn");
   newTaskBtn.addEventListener("click", () => {
-    newTaskDialog.showModal();
+    showNewTaskDialog();
   });
 }
 
@@ -166,7 +167,7 @@ function renderTask(task, index, project) {
   addTaskEventListeners(
     taskElem,
     (e) => handleTaskCheckboxChange(e, task),
-    (e) => handleTaskEditClick(e, task),
+    () => showNewTaskDialog(task),
     () => deleteTask(taskElem, index, project)
   );
 
@@ -181,7 +182,8 @@ function handleTaskCheckboxChange(event, task) {
 }
 
 function handleTaskEditClick(task) {
-  
+  editedTask = task;
+  newTaskDialog.showModal();
 }
 
 function deleteTask(taskElem, taskIndex, project) {
@@ -191,25 +193,54 @@ function deleteTask(taskElem, taskIndex, project) {
   todoList.saveToLocalStorage();
 }
 
+function showNewTaskDialog(task = null) {
+  const formTitle = newTaskDialog.querySelector(".form-title");
+  formTitle.textContent = !!task ? "Edit Task" : "Add New Task";
+
+  const title = taskForm.querySelector("#title");
+  const description = taskForm.querySelector("#description");
+  const dueDate = taskForm.querySelector("#due-date");
+  const priority = taskForm.querySelector("#priority");
+
+  if (!!task) {
+    title.value = task.title;
+    description.value = task.description;
+    dueDate.value = task.dueDate;
+    priority.value = task.priority;
+
+    editedTask = task;
+  }
+
+  newTaskDialog.showModal();
+}
+
 function handleFormSubmit() {
   const title = taskForm.querySelector("#title");
   const description = taskForm.querySelector("#description");
   const dueDate = taskForm.querySelector("#due-date");
   const priority = taskForm.querySelector("#priority");
 
-  const task = new Task(
-    title.value,
-    description.value,
-    dueDate.value,
-    priority.value
-  );
+  if (!!editedTask) {
+    editedTask.title = title.value;
+    editedTask.description = description.value;
+    editedTask.dueDate = dueDate.value;
+    editedTask.priority = priority.value;
+    editedTask = null;
+  } else {
+    const task = new Task(
+      title.value,
+      description.value,
+      dueDate.value,
+      priority.value
+    );
+    selectedProject.addTask(task);
+  }
 
   title.value = "";
   description.value = "";
   dueDate.value = null;
   priority.value = "none";
 
-  selectedProject.addTask(task);
   renderTaskList(selectedProject);
 
   todoList.saveToLocalStorage();
