@@ -38,10 +38,9 @@
 
 body {
   display: grid;
-  grid-template: 96px 1fr / minmax(300px, 1fr) 5fr;
+  grid-template: 12vh 88vh / minmax(300px, 1fr) 5fr;
   background-color: var(--color-bg-dark);
   color: var(--color-text);
-  min-height: 100vh;
 }
 
 header,
@@ -238,10 +237,15 @@ textarea:focus {
   filter: brightness(0.9);
 }
 
+main {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
 main .container {
   max-width: 900px;
-  margin: 3rem auto 0;
-  padding: 0 2rem;
+  margin: 0 auto;
+  padding: 3rem 2rem 2rem;
 }
 
 h1 {
